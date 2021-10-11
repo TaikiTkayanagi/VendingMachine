@@ -1,0 +1,107 @@
+body{
+  height: 100vh;
+  width: 100%;
+}
+
+.outest-div{
+    height: 100vh;
+    width: 100%;
+    background-color: black;
+}
+
+.machine-place{
+  height: 70vh;
+  width: 60%;
+  background-color: aqua;
+}
+
+.upper-block{
+  height: 70%;
+  width: 100%;
+}
+
+.upper-content-place{
+  height: 90%;
+  width: 50%;
+}
+
+.upper-left{
+  height: 90%;
+  width: 70%;
+}
+
+.upper-right{
+  height: 90%;
+  width: 30%;
+}
+
+.screen{
+  height: 100%;
+  width: 90%;
+  background-color: black;
+}
+
+.img-block{
+  height: 60%;
+  width: 30%;
+  background-color: white;
+}
+
+.detail-container{
+  height: 40%;
+  width: 90%;
+}
+
+.detail-block{
+  height: 90%;
+  width: 100%;
+  background-color: gray;
+}
+
+.select-number-block{
+  height: 80%;
+  width: 40%;
+  background-color:red;
+}
+
+.description-block{
+  height: 80%;
+  width: 50%;
+}
+
+.text-block{
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.select-btnList{
+  height: 60%;
+  width:90%;
+  background-color: gray;
+}
+
+.btn-block{
+  height: 80%;
+  width: 90%;
+  overflow: auto;
+}
+
+.push{
+  height: 20vh;
+  width: 70%;
+}
+
+.btn-place{
+  height: 50%;
+  width: 50%;
+}
+
+.main{
+  height: 100%;
+  width: 100%;
+}
+
+.extra{
+  height: 100%;
+  width: 100%;
+}

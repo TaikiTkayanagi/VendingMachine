@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="animation.css" />
+  <script type="text/javascript" src="./Drink.js"></script>
+  <script type="text/javascript" src="./vendingMachine.js"></script>
+</head>
+
+<body>
+  <div class="outest-div d-flex justify-content-center align-items-center">
+    <div class="machine-place">
+      <div class="upper-block d-flex justify-content-center align-items-center">
+        <div class="upper-left d-flex justify-content-center">
+          <div class="screen d-flex justify-content-center align-items-center">
+            <div id="img-target" class="img-block d-flex justify-content-center" >
+              <!--<i class="fab fa-500px"></i>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="upper-right">
+          <div class="detail-container d-flex justify-content-center">
+            <div class="detail-block d-flex align-items-center justify-content-center">
+              <div id="drink-number" class="select-number-block d-flex justify-content-center align-items-center">
+              </div>
+              <div class="description-block d-flex justify-content-center">
+                <div id="description" class="text-block">
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="select-btnList d-flex justify-content-center align-items-center" style="background-color: gray;">
+            <!--動的にJSで動的にdivブロックを追加する-->
+            <div id="btn-target" class="btn-block d-flex flex-wrap">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="push d-flex justify-content-center align-items-center">
+        <div class="btn-place d-flex justify-content-center align-items-center">
+          <input type="button" value="push" class="btn btn-secondary btn-lg btn-block">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
