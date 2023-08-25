@@ -1,148 +1,119 @@
-const mathRandom = (max: number, min: number) => () => Math.round(Math.random() * (max - min) + min);
+import { Drink, DrinkElement, DRINK } from "const"
 
-const calculatePrice = mathRandom(200, 100)
-
-type Drink = {
-    name: string,
-    icon: string,
-    price: number
+const createDivElement = (className: string[]) => {
+    const div = document.createElement('div')
+    div.classList.add(...className)
+    return div
 }
-const drink: Drink[] = [
-    {
-        name: 'coke',
-        icon: '<i class="fas fa-cocktail"></i>',
-        price: calculatePrice()
-    },
-    {
-        name: 'wine',
-        icon: '<i class="fas fa-wine-glass-alt"></i>',
-        price: calculatePrice()
-    },
-    {
-        name: 'hotCoffee',
-        icon: '<i class="fas fa-mug-hot"></i>',
-        price: calculatePrice()
-    },
-    {
-        name: 'wineBottle',
-        icon: '<i class="fas fa-wine-bottle"></i>',
-        price: calculatePrice()
-    },
-    {
-        name: 'coffee',
-        icon: '<i class="fas fa-coffee"></i>',
-        price: calculatePrice()
-    },
-    {
-        name: 'whiskey',
-        icon: '<i class="fas fa-glass-whiskey"></i>',
-        price: calculatePrice()
-    },
-    {
-        name: 'beer',
-        icon: '<i class="fas fa-beer"></i>',
-        price: calculatePrice()
-    },
-    {
-        name: 'lemon',
-        icon: '<i class="far fa-lemon"></i>',
-        price: calculatePrice()
-    },
-    {
-        name: 'apple',
-        icon: '<i class="fas fa-apple-alt"></i>',
-        price: calculatePrice()
-    }
-]
-
-const createElement = (element: string) => document.createElement(element)
-
-function createButtons(count: number) {
-    let btnTarget = document.getElementById('btn-target') as HTMLElement;
-    for (let i = 0; i < count; i++) {
-        let div = document.createElement('div');
-        let button = document.createElement('input');
-
-        div.classList.add('col-4');
-        button.classList.add('btn', 'btn-primary', 'drink-btn');
-
-        button.setAttribute('type', 'button');
-        button.setAttribute('value', (i + 1).toString());
-
-        div.append(button);
-        btnTarget.append(div);
-    }
+const createDrinkButton = (className: string[]) => (attributeKey: string, attributeValue: string) => {
+    const button = document.createElement('input')
+    button.classList.add(...className)
+    button.setAttribute('type', 'button')
+    button.setAttribute(attributeKey, attributeValue)
+    return button
+}
+const createDrinkButtons = (drink: Drink[]) => {
+    const buttonWithSetAttribute = createDrinkButton(['btn', 'btn-primary', 'drink-btn'])
+    const result: DrinkElement[] = []
+    drink.map((drink, index) => {
+        const div = createDivElement(['col-4'])
+        const button = buttonWithSetAttribute('value', (index+1).toString())
+        div.appendChild(button)
+        result.push({div, drink})
+    })
+    return result
+}
+const createDrinkNumberCharacter = (innerHTML: string) => {
+    const h1 = document.createElement('h1')
+    setInnerHtml(h1, innerHTML)
+    return h1
+}
+const createDrinkNameElement = (name: string) => {
+    const p = document.createElement('p')
+    setInnerHtml(p, name)
+    return p
+}
+const createDrinkPriceElement = (price: number) => {
+    const p = document.createElement('p')
+    setInnerHtml(p, `$${price}`)
+    return p
 }
 
-function slideShow(nextDrink: Drink, nextIndex: number) {
-    let imgTarget = document.getElementById('img-target') as HTMLElement;
-    const main = [...document.getElementsByClassName('main')][0];
-    const extra = [...document.getElementsByClassName('extra')][0];
+const appends = (parent: HTMLElement, child: Element[]) => child.map(value => parent.appendChild(value))
 
-    if (main.childElementCount === 0) main.innerHTML = nextDrink.icon;
-    else {
-        imgTarget.innerHTML = '';
+const appendToBtnTarget = (drinkElements: DrinkElement[]) => {
+    const btnTarget = document.getElementById('btn-target')
+    if(!btnTarget) throw new Error('btn-targetが存在しない')
+    const divElements = drinkElements.map(value => value.div)
+    appends(btnTarget, divElements)
+}
 
-        extra.innerHTML = main.innerHTML;
-        main.innerHTML = nextDrink.icon;
+const getDrinkDescriptionElement = () => document.getElementById('description')
+const getDrinkNumberElement = () => document.getElementById('drink-number')
+const getMainElement = () => [...document.getElementsByClassName('main')][0]
+const getExtraElement = () => [...document.getElementsByClassName('extra')][0]
+const setInnerHtml = (element: Element, innerHtml: string) => element.innerHTML = innerHtml
+const emptyInnerHtml = (element: Element) => {
+    setInnerHtml(element, '')
+    return element
+}
 
-        let currentIndex = Number(imgTarget.getAttribute('data-index') as string);
-        if (currentIndex <= nextIndex) {
+const showFirstDrink = (drink: Drink) => {
+    const main = getMainElement()
+    if(!main) throw new Error('mainコンポーネントが存在しない')
+    setInnerHtml(main, drink.icon)
+}
 
-            imgTarget.append(extra);
-            imgTarget.append(main);
-
-        } else {
-
-            imgTarget.append(main);
-            imgTarget.append(extra);
-
-        }
-    }
-
-    imgTarget.setAttribute('data-index', nextIndex.toString());
+const exchangeTo = (selectedDrink: Drink, selectedIndex: number) => {
+    const imgTarget = document.getElementById('img-target')
+    if(!imgTarget) throw new Error('img-targetが存在しない')
+    const main = getMainElement()
+    const extra = getExtraElement()
+    if(!main || !extra) throw new Error('mainまたはextraクラスのコンポーネントが存在しない')
+    if(!main.childElementCount) throw new Error('mainにChildElementが存在しない')
+    emptyInnerHtml(imgTarget)
+    setInnerHtml(extra, main.innerHTML)
+    setInnerHtml(main, selectedDrink.icon)
+    const currentNumber = imgTarget.getAttribute('data-index')
+    if(!currentNumber) throw new Error('img-targetにdata-indexという属性が存在しない')
+    Number(currentNumber) <= selectedIndex ? appends(imgTarget, [extra, main]) : appends(imgTarget, [main, extra])
+    imgTarget.setAttribute('data-index', selectedIndex.toString())
 }
 
 function showDrinkNumber(number: number) {
-    let drinkNumber = document.getElementById('drink-number') as HTMLElement;
-    let h = document.createElement('h1');
-
-    h.innerHTML = (number + 1).toString();
-
-    drinkNumber.innerHTML = '';
-    drinkNumber.append(h);
+    let drinkNumber = getDrinkNumberElement()
+    if(!drinkNumber) throw new Error('DescriptionElementが存在しない')
+    const h1 = createDrinkNumberCharacter((number+1).toString())
+    emptyInnerHtml(drinkNumber)
+    drinkNumber.append(h1);
 }
 
 function showDescription(drink: Drink) {
-    let description = document.getElementById('description') as HTMLElement;
-
-    let p1 = document.createElement('p');
-    let p2 = document.createElement('p2');
-
-    p1.innerHTML = drink.name;
-    p2.innerHTML = '$' + drink.price;
-
-    description.innerHTML = '';
-    description.append(p1);
-    description.append(p2);
+    const description = getDrinkDescriptionElement()
+    if(!description) throw new Error('descriptionElementが存在しない')
+    const drinkName = createDrinkNameElement(drink.name)
+    const drinkPrice = createDrinkPriceElement(drink.price)
+    emptyInnerHtml(description)
+    appends(description, [drinkName, drinkPrice])
 }
 
-function clickDrinkBtnEvent() {
-    let drinkBtns = document.querySelectorAll('.drink-btn');
-
-    for (let i = 0; i < drinkBtns.length; i++) {
-        drinkBtns[i].addEventListener('click', () => {
-            slideShow(drink[i], i);
-            showDrinkNumber(i);
-            showDescription(drink[i]);
+function registerClickEvent(divElements: DrinkElement[]) {
+    divElements.map((value, index) => {
+        const button = value.div.firstChild
+        if(!(button instanceof HTMLInputElement))throw new Error('divにButton以外のElementがある')
+        button.addEventListener('click', () => {
+            exchangeTo(value.drink, index)
+            showDrinkNumber(index)
+            showDescription(value.drink)
         })
-    }
+    })
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    createButtons(drink.length);
-    clickDrinkBtnEvent();
-    slideShow(drink[0], 0);
+    const divElements = createDrinkButtons(DRINK)
+    appendToBtnTarget(divElements)
+    registerClickEvent(divElements)
+    showFirstDrink(DRINK[0]);
     showDrinkNumber(0);
-    showDescription(drink[0]);
+    showDescription(DRINK[0]);
 })
