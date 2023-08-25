@@ -22,9 +22,6 @@ const drinkImgUrl = [
   '<i class="fas fa-apple-alt"></i>'
 ]
 
-var main = document.createElement('div');
-var extra = document.createElement('div');
-
 let drinkList = new Array();
 for (let i = 0; i < drinkNameList.length; i++) {
   let price = Math.round(Math.random() * (200 - 100) + 100);
@@ -52,6 +49,8 @@ function createButtons(count) {
 
 function slideShow(nextDrink, nextIndex) {
   let imgTarget = document.getElementById('img-target');
+  const main = [...document.getElementById('img-target').getElementsByClassName('main')][0];
+  const extra = [...document.getElementById('img-target').getElementsByClassName('extra')][0];
 
   if (main.childElementCount === 0) {main.innerHTML = nextDrink.getImgUrl();}
   else {
@@ -114,14 +113,6 @@ function clickDrinkBtnEvent() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  let imgTarget = document.getElementById('img-target');
-
-  main.classList.add('main', 'show', 'd-flex', 'justify-content-center', 'align-items-center');
-  extra.classList.add('extra', 'disappear', 'd-flex', 'justify-content-center', 'align-items-center');
-
-  imgTarget.append(main);
-  imgTarget.append(extra);
-
   createButtons(drinkList.length);
   clickDrinkBtnEvent();
 
