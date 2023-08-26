@@ -59,3 +59,5 @@ export const DRINK: Drink[] = [
         price: calculatePrice()
     }
 ]
+
+export default DRINK

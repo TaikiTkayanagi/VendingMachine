@@ -1,4 +1,4 @@
-import { Drink, DrinkElement, DRINK } from "const"
+import DRINK, { Drink, DrinkElement } from "./const"
 
 const createDivElement = (className: string[]) => {
     const div = document.createElement('div')
@@ -59,9 +59,13 @@ const emptyInnerHtml = (element: Element) => {
 }
 
 const showFirstDrink = (drink: Drink) => {
+    const imgTarget = document.getElementById('img-target')
+    const firstDrinkIndex = "0"
+    if(!imgTarget) throw new Error('img-targetが存在しない')
     const main = getMainElement()
     if(!main) throw new Error('mainコンポーネントが存在しない')
     setInnerHtml(main, drink.icon)
+    imgTarget.setAttribute('data-index', firstDrinkIndex)
 }
 
 const exchangeTo = (selectedDrink: Drink, selectedIndex: number) => {
