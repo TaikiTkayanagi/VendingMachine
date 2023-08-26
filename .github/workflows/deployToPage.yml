@@ -34,7 +34,7 @@ jobs:
         with: 
           node-version: 16.14.0
       - name: install And Build
-        run: npm install && npm productBuild
+        run: npm install && npm run productBuild
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
 
