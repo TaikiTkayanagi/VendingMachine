@@ -38,7 +38,7 @@ jobs:
       - name: Make Deploy Folder
         run: |
           mkdir out
-          cp html/index.html out/
+          cp index.html out/
           cp css out/
           cp dist out/
       - name: Upload artifact
