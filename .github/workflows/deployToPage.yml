@@ -33,12 +33,16 @@ jobs:
         uses: actions/setup-node@v3.8.1
         with: 
           node-version: 16.14.0
-      - name: install And Build
+      - name: Install And Build
         run: npm install && npm run productBuild
+      - name: Make Deploy Folder
+        run: |
+          cp html/index.html dist/
+          cp css/* dist/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ./
+          path: ./dist
 
   # Deployment job
   deploy:
