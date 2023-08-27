@@ -38,9 +38,9 @@ jobs:
       - name: Make Deploy Folder
         run: |
           mkdir out
-          cp index.html out/
-          cp css out/
-          cp dist out/
+          cp　index.html out/
+          cp -r css out/
+          cp -r dist out/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
