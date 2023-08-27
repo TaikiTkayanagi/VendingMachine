@@ -37,12 +37,14 @@ jobs:
         run: npm install && npm run productBuild
       - name: Make Deploy Folder
         run: |
-          cp html/index.html dist/
-          cp css/* dist/
+          mkdir out
+          cp index.html out/
+          cp -r css out/
+          cp -r dist out/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ./dist
+          path: ./out
 
   # Deployment job
   deploy:
